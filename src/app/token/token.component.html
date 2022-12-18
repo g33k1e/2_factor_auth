@@ -1,0 +1,31 @@
+<section class="w-100 p-4 d-flex justify-content-center pb-4">
+    <div style="width: 26rem;">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+                <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+                    <form [formGroup]="tokenForm" (ngSubmit)="sendToken()">
+                        <div class="text-center mb-3">
+
+                            <p class="text-center">Follow the instructions you have received in your email</p>
+                            <p class="warning-msg" *ngIf="showWarning">Field can't be empty</p>
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="loginName" class="form-control" formControlName="token">
+                                <label class="form-label" for="token">Insert</label>
+                                <label class="form-counter">{{remaining}}</label>
+                                <div class="form-notch">
+                                    <div class="form-notch-leading" style="width: 9px;"></div>
+                                    <div class="form-notch-middle" style="width: 114.4px;"></div>
+                                    <div class="form-notch-trailing"></div>
+                                </div>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

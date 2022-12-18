@@ -12,8 +12,9 @@ export class LogregService {
 
   private currentUserSubject:BehaviorSubject<User>;
 
-
+  private url_login_fake = '';
   private url_login = '';
+  private url_register_fake = '';
   private url_register = '';
   private url_update_image = '';
 
@@ -22,12 +23,54 @@ export class LogregService {
 
    }
 
-  login(login:FormGroup):Observable<boolean>{
+  registerFake(register:FormGroup):Observable<boolean>{
+
+    const registerData = new FormData();
+
+    registerData.append('name',register.get('name')?.value);
+    registerData.append('username',register.get('username')?.value);
+    registerData.append('user_image',register.get('user_image')?.value);
+    registerData.append('email',register.get('email')?.value);
+    registerData.append('password',register.get('password')?.value);
+
+    return this.httpClient.post<any>(this.url_register_fake,registerData,{observe:'response'}).pipe(map(response=>{
+
+      if(response.status === 200 && response.body.info === 'tok'){
+
+        return true;
+      }
+
+      return false;
+
+    }),catchError(this.handleError<any>('registerFake')));
+
+  }
+
+  loginFake(login:FormGroup):Observable<boolean>{
 
     const loginData = new FormData();
 
     loginData.append('eou',login.get('eou')?.value);
     loginData.append('password',login.get('password')?.value);
+
+    return this.httpClient.post<any>(this.url_login_fake,loginData,{observe:'response'}).pipe(map(response=>{
+      if(response.status === 200 && response.body.info === 'tok'){
+
+        return true;
+      }
+
+      return false;
+
+    }),catchError(this.handleError<any>('loginFake')));
+
+  }
+
+  login(token:FormGroup):Observable<boolean>{
+
+    const loginData = new FormData();
+
+    loginData.append('token',token.get('token')?.value);
+
 
     return this.httpClient.post<User>(this.url_login,loginData,{observe:'response'}).pipe(map(response=>{
       if(response.status === 200){
@@ -42,17 +85,24 @@ export class LogregService {
 
   }
 
-  register(register:FormGroup):Observable<object>{
+  register(tokenform:FormGroup):Observable<object>{
 
     const registerData = new FormData();
 
-    registerData.append('name',register.get('name')?.value);
-    registerData.append('username',register.get('username')?.value);
-    registerData.append('user_image',register.get('user_image')?.value);
-    registerData.append('email',register.get('email')?.value);
-    registerData.append('password',register.get('password')?.value);
+    registerData.append('token',tokenform.get('token')?.value);
 
-    return this.httpClient.post(this.url_register,registerData,{observe:'body'}).pipe(catchError(this.handleError<any>('register')));
+
+
+    return this.httpClient.post<any>(this.url_register,registerData,{observe:'response'}).pipe(map(response=>{
+
+      if(response.status === 200 && response.body.info === true){
+
+        return true;
+      }
+
+      return false;
+
+    }),catchError(this.handleError<any>('register')));
 
   }
 

@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LogRegisterComponent } from './log-register/log-register.component';
+import { TokenComponent } from './token/token.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
-    LogRegisterComponent
+    LogRegisterComponent,
+    TokenComponent
   ],
   imports: [
     BrowserModule,

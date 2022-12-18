@@ -15,6 +15,7 @@ export class LogRegisterComponent {
   showWarning:boolean;
 
   constructor(private fb:FormBuilder, private logreg:LogregService, private route:Router){
+
     this.registerForm = this.fb.group({
       name:['',Validators.required],
       username:['',Validators.required],
@@ -29,6 +30,7 @@ export class LogRegisterComponent {
       password:['',Validators.required]
     })
     this.showWarning = false;
+
   }
 
   sendLogin():void{
@@ -37,11 +39,11 @@ export class LogRegisterComponent {
       return;
     }
 
-    this.logreg.login(this.loginForm).subscribe(result=>{
+    this.logreg.loginFake(this.loginForm).subscribe(result=>{
 
       if(result){
 
-        this.route.navigateByUrl('/profile');
+        this.route.navigate(['/token'],{queryParams:{login:true}});
       }else{
         this.showWarning = true;
       }
@@ -57,10 +59,10 @@ export class LogRegisterComponent {
       return;
     }
 
-    this.logreg.register(this.registerForm).subscribe(result=>{
+    this.logreg.registerFake(this.registerForm).subscribe(res=>{
 
-      if(result){
-       window.location.reload();
+      if(res){
+        this.route.navigate(['/token'],{queryParams:{register:true}});
       }
     })
 
